@@ -1,0 +1,51 @@
+<div class="container">
+  <form ng-submit="process()">
+    <div class="form-group">
+      <h1 class="text-center">PhoneBook</h1>
+      <label for="name">Name</label>
+      <input ng-model="data.name" type="text" id="name" class="form-control"  placeholder="Write your Name">
+    </div>
+    <div class="form-group">
+      <label for="lastname">LastName</label>
+      <input ng-model="data.lastname" class="form-control" type="text" id="lastname"  placeholder="Write your LastName">
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone</label>
+      <input ng-model="data.phone" class="form-control" type="number" id="phone"  placeholder="Write your Phone Number">
+    </div>
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input ng-model="data.address" class="form-control" type="text" id="address"  placeholder="Write your Address">
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input ng-model="data.email" class="form-control" type="email" id="email"  placeholder="Write your Email">
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">Add to Phonebook</button>
+    <button type="reset" ng-click="reset()" class="btn btn-default btn-block">Reset</button>
+  </form>
+  <br>
+  <div ng-show="showInfo" class="alert alert">
+    {{message}}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Phone Number</th>
+          <th>Address</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="Name"></td>
+          <td id='Lastname'></td>
+          <td id='Phone'></td>
+          <td id='Address'></td>
+          <td id='Email'></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
