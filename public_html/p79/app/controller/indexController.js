@@ -2,12 +2,31 @@ angular.module('P79').controller('indexController',
         [
           '$scope',
           'DataBaseService',
-          function ($scope, DataBase) {
+          '$localStorage',
+          '$sessionStorage',
+          function ($scope, DataBase, localStorage, sessionStorage) {
+
+            localStorage.nombre = "Julian";
+            sessionStorage.apellido = 'Lasso';
+            localStorage.dataBase = [
+              {
+                nombre: 'Julian',
+                apellido: 'Lasso'
+              }
+            ];
+
+            $scope.datos = localStorage.dataBase;
+            localStorage.dataBase.push({nombre: 'Alejandro', apellido: 'Gomez'});
+            delete localStorage.nombre;
+
+
             $scope.showInfo = false;
+            $scope.flag = 0;
             $scope.data = {};
             $scope.process = function () {
               $scope.Inventory = JSON.parse(localStorage.getItem('Inventory'));
               if ($scope.Inventory === null) {
+                $scope.flag = 1;
                 $scope.Inventory = [
                   $scope.data
                 ];
@@ -18,15 +37,22 @@ angular.module('P79').controller('indexController',
                   $("#Phone").append(element.phone + "<br>");
                   $("#Address").append(element.address + "<br>");
                   $("#Email").append(element.email + "<br>");
+                  localStorage.setItem('Inventory', JSON.stringify($scope.Inventory));
                 });
               } else {
                 $scope.Inventory.forEach(function (element) {
                   if (element.phone === $scope.data.phone) {
-                    alert("telefono repetido");
+                    $scope.flag = 1;
+                    alert("The telephone number is already registered");
                   } else if (element.email === $scope.data.email) {
-                    alert("eamil repetido");
+                    $scope.flag = 1;
+                    alert("The email is already registered");
+                  } else {
+                    $scope.flag = 0;
                   }
                 });
+              }
+              if ($scope.flag === 0) {
                 $scope.Inventory.push($scope.data);
                 localStorage.setItem('Inventory', JSON.stringify($scope.Inventory));
                 $("#Name").empty();
@@ -36,7 +62,6 @@ angular.module('P79').controller('indexController',
                 $("#Email").empty();
                 print();
               }
-              localStorage.setItem('Inventory', JSON.stringify($scope.Inventory));
             };
             function print() {
               $scope.showInfo = true;
@@ -49,15 +74,7 @@ angular.module('P79').controller('indexController',
                 $("#Email").append(element.email + "<br>");
               });
             }
-            function push() {
-            }
             $scope.reset = function () {
-              $("#Name").empty();
-              $("#Lastname").empty();
-              $("#Phone").empty();
-              $("#Address").empty();
-              $("#Email").empty();
-              $scope.data = {};
               $scope.showInfo = false;
             };
           }
